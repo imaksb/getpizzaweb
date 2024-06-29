@@ -55,3 +55,11 @@ interface OrderData {
 interface CreateOrderError {
   phone: string;
 }
+
+interface CartItemProps {
+  pizzaId: number;
+  name: string;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+}

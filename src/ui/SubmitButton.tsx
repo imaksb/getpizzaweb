@@ -4,6 +4,7 @@ interface SubmitButtonProps {
   isSubmitting?: boolean;
   to?: string;
   children: React.ReactNode;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>; // Оновлено тут
   type: "base" | "primary" | "small";
 }
 const base =
@@ -15,7 +16,7 @@ const styles = {
   small: base + " px-3 py-2 text-xs",
 };
 
-function SubmitButton({ children, isSubmitting, to, type }: SubmitButtonProps) {
+function SubmitButton({ children, isSubmitting, to, type, onClick }: SubmitButtonProps) {
   const className = styles[type];
 
   if (to) {
@@ -23,6 +24,14 @@ function SubmitButton({ children, isSubmitting, to, type }: SubmitButtonProps) {
       <Link to={to} className={className}>
         {children}
       </Link>
+    );
+  }
+
+  if (onClick) {
+    return (
+      <button disabled={isSubmitting} className={className} onClick={onClick}>
+        {children}
+      </button>
     );
   }
   return (

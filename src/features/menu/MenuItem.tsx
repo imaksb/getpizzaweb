@@ -1,8 +1,22 @@
+import { useDispatch } from "react-redux";
 import SubmitButton from "../../ui/SubmitButton.tsx";
 import { formatCurrency } from "../../utils/helpers.tsx";
+import { addItem } from "../cart/cartSlice.tsx";
 
 function MenuItem({ pizza }: MenuItemProps) {
-  const { name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const dispatch = useDispatch();
+
+  function handleAddToCart() {
+    const newPizza = {
+      pizzaId: id,
+      name: name,
+      quantity: 1,
+      unitPrice: unitPrice,
+      totalPrice: unitPrice,
+    };
+    dispatch(addItem(newPizza));
+  }
 
   return (
     <li className="flex gap-4 py-2 font-mono">
@@ -20,7 +34,11 @@ function MenuItem({ pizza }: MenuItemProps) {
           ) : (
             <p className="text-m font-medium uppercase text-stone-500">Sold out</p>
           )}
-          <SubmitButton type="small">Add to cart</SubmitButton>
+          {!soldOut && (
+            <SubmitButton type="small" onClick={handleAddToCart}>
+              Add to cart
+            </SubmitButton>
+          )}
         </div>
       </div>
     </li>

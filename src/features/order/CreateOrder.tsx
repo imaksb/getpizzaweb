@@ -1,5 +1,7 @@
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import SubmitButton from "../../ui/SubmitButton";
+import { useSelector } from "react-redux";
+import { IRootState } from "../../store";
 
 // https://uibakery.io/regex-library/phone-number
 
@@ -32,6 +34,7 @@ function CreateOrder() {
   const cart = fakeCart as CartItem[];
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
+  const username = useSelector((state: IRootState) => state.user.username);
 
   const formErrors = useActionData() as CreateOrderError;
   console.log(cart);
@@ -44,7 +47,13 @@ function CreateOrder() {
           <label className="sm:basis-40">First Name</label>
 
           <div className="grow">
-            <input type="text" name="customer" className="input w-full" required />
+            <input
+              type="text"
+              name="customer"
+              className="input w-full"
+              defaultValue={username}
+              required
+            />
           </div>
         </div>
 
